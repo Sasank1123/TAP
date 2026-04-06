@@ -137,7 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Print
     document.getElementById('btn-print').addEventListener('click', () => {
+        const originalTitle = document.title;
+        const invNo = document.getElementById('f-inv-no').value.trim();
+        
+        if (invNo) {
+            document.title = `invoice_${invNo}`;
+        } else {
+            document.title = `invoice`;
+        }
+        
         window.print();
+        
+        document.title = originalTitle;
     });
 
     // Initial setup
