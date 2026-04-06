@@ -1,11 +1,232 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>WELCOME TO GIT</h1>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Invoice Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container no-print">
+        <div class="form-section">
+            <h2 class="form-title">Invoice Details Form</h2>
+            
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label>Invoice No</label>
+                    <input type="text" id="f-inv-no">
+                </div>
+                <div class="form-group">
+                    <label>Invoice Date</label>
+                    <input type="text" id="f-inv-date" placeholder="DD/MM/YYYY">
+                </div>
+            </div>
+
+            <fieldset>
+                <legend>Buyer Details</legend>
+                <div class="form-group">
+                    <label>Buyer Name</label>
+                    <input type="text" id="f-b-name">
+                </div>
+                <div class="form-group">
+                    <label>Buyer Address</label>
+                    <textarea id="f-b-addr" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Buyer GSTIN</label>
+                    <input type="text" id="f-b-gstin">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Shipping & Other Details</legend>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label>Delivery Note</label>
+                        <input type="text" id="f-del-note">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <input type="text" id="f-pay-terms">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label>Suppliers Ref</label>
+                        <input type="text" id="f-sup-ref">
+                    </div>
+                    <div class="form-group">
+                        <label>Other References</label>
+                        <input type="text" id="f-oth-ref">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label>Vehicle No</label>
+                        <input type="text" id="f-veh-no">
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Date</label>
+                        <input type="text" id="f-veh-date">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label>Despatched Through</label>
+                        <input type="text" id="f-desp-thru">
+                    </div>
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <input type="text" id="f-dest">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Items</legend>
+                <div id="items-form-container">
+                    <!-- Dynamic form items go here -->
+                </div>
+                <button type="button" class="btn btn-secondary" id="btn-add-item">+ Add Item</button>
+            </fieldset>
+
+            <button type="button" class="btn btn-primary btn-print" id="btn-print">Download / Print Bill</button>
+        </div>
+        
+        <div class="preview-section">
+            <h2 class="form-title" style="margin-bottom: 20px; color: #4b5563;">Live Preview</h2>
+            <div class="invoice-box-wrapper">
+                
+                <!-- BEGIN INVOICE -->
+                <div class="invoice-box" id="printable-area">
+                    <div class="invoice-title">TAX INVOICE</div>
+                    
+                    <!-- Header Table -->
+                    <table class="main-table">
+                        <tr>
+                            <td rowspan="5" style="width: 50%; border-bottom: none!important; padding: 4px;">
+                                <div style="font-size: 14px;">
+                                    <strong>Shri Sanvika Traders</strong><br>
+                                    No.73/7, S P H Road,<br>
+                                    Melnalathur,Thiruvallur,Tamil Nadu -602002.<br>
+                                    GSTIN: 33AEEFS7689K1ZB<br>
+                                    Mobile :9884608400
+                                </div>
+                                <div style="border-top: 1px solid black; margin: 4px -4px 0 -4px; padding: 4px 4px 0 4px; font-size: 13px;">
+                                    <strong>Buyer</strong><br>
+                                    <strong id="p-b-name"></strong><br>
+                                    <span id="p-b-addr" style="white-space: pre-wrap;"></span><br>
+                                    <strong>GSTIN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="p-b-gstin"></span></strong>
+                                </div>
+                            </td>
+                            <td style="width: 25%;">Invoice No: <span id="p-inv-no"></span></td>
+                            <td style="width: 25%;">Dated: <span id="p-inv-date"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Note<br><span id="p-del-note"></span></td>
+                            <td>Mode/Terms of Payment<br><span id="p-pay-terms"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Suppliers Ref<br><span id="p-sup-ref"></span></td>
+                            <td>Other References<br><span id="p-oth-ref"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Vehicle No.<br><span id="p-veh-no"></span></td>
+                            <td>Dated<br><span id="p-veh-date"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Despatched Through<br><span id="p-desp-thru"></span></td>
+                            <td>Destination<br><span id="p-dest"></span></td>
+                        </tr>
+                    </table>
+
+                    <!-- Items Table -->
+                    <table class="main-table items-table" style="border-top: none;">
+                        <thead>
+                            <tr>
+                                <th style="width: 6%;">Sl No.</th>
+                                <th style="width: 32%;">Description of<br>Goods</th>
+                                <th style="width: 14%;">HSN/SAC</th>
+                                <th style="width: 10%;">Quantity</th>
+                                <th style="width: 8%;">Unit</th>
+                                <th style="width: 12%;">Unit<br>Price</th>
+                                <th style="width: 18%;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="p-items-body">
+                            <!-- Items inserted by JS -->
+                        </tbody>
+                        <tbody>
+                            <!-- Tax Row Spacing -->
+                            <tr style="height: 140px;">
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot text-right v-bottom pd-bot">CGST<br>SGST</td>
+                                <td class="no-b-top no-b-bot text-center v-bottom pd-bot">9%<br>9%</td>
+                                <td class="no-b-top no-b-bot text-right v-bottom pad-none">
+                                    <div class="inner-amt-border" id="p-subtotal">0.00</div>
+                                    <div class="inner-amt-pad" id="p-cgst">0.00</div>
+                                    <div class="inner-amt-pad" id="p-sgst">0.00</div>
+                                </td>
+                            </tr>
+                            <!-- Totals Row -->
+                            <tr>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot">Total</td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-top no-b-bot"></td>
+                                <td class="no-b-bot text-right" id="p-total-pre">0.00</td>
+                            </tr>
+                            <tr>
+                                <td class="no-b-top"></td>
+                                <td class="no-b-top">Round Off</td>
+                                <td class="no-b-top"></td>
+                                <td class="no-b-top"></td>
+                                <td class="no-b-top"></td>
+                                <td class="no-b-top"></td>
+                                <td class="no-b-top text-right" id="p-roundoff">0.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="6" class="text-right" style="padding-right: 15px;">Total</th>
+                                <th class="text-right" id="p-grand-total">0.00</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Words & Bank Table -->
+                    <table class="main-table" style="border-top: none;">
+                        <tr>
+                            <td colspan="2">
+                                Amount Chargeable (in words) :<span id="p-words"></span> E.&O.E
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; border-bottom: none!important; padding-top: 6px; padding-bottom: 6px;">
+                                Account Name: Shri Sanvika Traders<br>
+                                Account Number : 300511010000029<br>
+                                Union Bank of India<br>
+                                IFSC : UBIN0830054<br>
+                                Kakkalur Branch.
+                            </td>
+                            <td style="width: 50%; border-bottom: none!important; text-align: right; vertical-align: bottom; padding-bottom: 6px;">
+                                Authorised Signatory
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!-- END INVOICE -->
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>
