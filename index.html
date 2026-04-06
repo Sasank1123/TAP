@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Invoice Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <div class="form-section no-print">
             <h2 class="form-title">Invoice Details Form</h2>
-            
+
             <div class="form-group-row">
                 <div class="form-group">
                     <label>Invoice No</label>
@@ -90,17 +93,22 @@
                 <button type="button" class="btn btn-secondary" id="btn-add-item">+ Add Item</button>
             </fieldset>
 
-            <button type="button" class="btn btn-primary btn-print" id="btn-print">Download / Print Bill</button>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn btn-primary btn-print" id="btn-print" style="flex: 1;">Print
+                    Bill</button>
+                <button type="button" class="btn btn-primary" id="btn-download"
+                    style="flex: 1; background-color: #2563eb;">Download PDF</button>
+            </div>
         </div>
-        
+
         <div class="preview-section">
             <h2 class="form-title no-print" style="margin-bottom: 20px; color: #4b5563;">Live Preview</h2>
             <div class="invoice-box-wrapper">
-                
+
                 <!-- BEGIN INVOICE -->
                 <div class="invoice-box" id="printable-area">
                     <div class="invoice-title">TAX INVOICE</div>
-                    
+
                     <!-- Header Table -->
                     <table class="main-table">
                         <tr>
@@ -112,11 +120,13 @@
                                     GSTIN: 33AEEFS7689K1ZB<br>
                                     Mobile :9884608400
                                 </div>
-                                <div style="border-top: 1px solid black; margin: 4px -4px 0 -4px; padding: 4px 4px 0 4px; font-size: 13px;">
+                                <div
+                                    style="border-top: 1px solid black; margin: 4px -4px 0 -4px; padding: 4px 4px 0 4px; font-size: 13px;">
                                     <strong>Buyer</strong><br>
                                     <strong id="p-b-name"></strong><br>
                                     <span id="p-b-addr" style="white-space: pre-wrap;"></span><br>
-                                    <strong>GSTIN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="p-b-gstin"></span></strong>
+                                    <strong>GSTIN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                                            id="p-b-gstin"></span></strong>
                                 </div>
                             </td>
                             <td style="width: 25%;">Invoice No: <span id="p-inv-no"></span></td>
@@ -226,11 +236,13 @@
             </div>
         </div>
     </div>
-    
-    <footer class="no-print" style="text-align: center; margin-top: 20px; padding-bottom: 20px; font-weight: bold; color: #6b7280; font-size: 0.9rem;">
-        website by SASANK REDDY
+
+    <footer class="no-print"
+        style="text-align: center; margin-top: 20px; padding-bottom: 20px; font-weight: bold; color: #6b7280; font-size: 0.9rem;">
+        w
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

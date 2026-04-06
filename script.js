@@ -151,6 +151,26 @@ document.addEventListener('DOMContentLoaded', () => {
         document.title = originalTitle;
     });
 
+    // Initialize Download
+    document.getElementById('btn-download').addEventListener('click', () => {
+        const invNo = document.getElementById('f-inv-no').value.trim();
+        const filename = invNo ? `invoice_${invNo}.pdf` : 'invoice.pdf';
+        const element = document.getElementById('printable-area');
+        
+        // Hide elements not to be printed if any, html2pdf will capture the element as is
+        // We set options to scale it properly
+        const opt = {
+            margin:       0.3,
+            filename:     filename,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Create PDF
+        html2pdf().set(opt).from(element).save();
+    });
+
     // Initial setup
     updateText();
     createRow(); // adds the default UltratechCement row
